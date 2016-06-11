@@ -23,7 +23,7 @@ void encodePass(char* inPass)
   }
 }
 
-void encrypt(char* infilename, char* pass)
+void encrypt(char* infilename, char* pass, char* outputName)
 {
   FILE *fp, *outfp;
   char extension[10];
@@ -35,7 +35,7 @@ void encrypt(char* infilename, char* pass)
   int passwordCharVal, i = 0;
 
   strcpy(extension, getFT(infilename));
-  strcpy(outfilename, "outfile");
+  strcpy(outfilename, outputName);
   strcat(outfilename, extension);
 
   fp = fopen(infilename, "r");
@@ -65,13 +65,11 @@ void encrypt(char* infilename, char* pass)
     i++;
   }
 
-  printf("\nTest:\n%s\n\n", extension);
-
   fclose(fp);
   fclose(outfp);
 }
 
-void decrypt(char* infilename, char* pass)
+void decrypt(char* infilename, char* pass, char* outputName)
 {
   FILE *fp, *outfp;
   char extension[10];
@@ -83,7 +81,7 @@ void decrypt(char* infilename, char* pass)
   int passwordCharVal, i = 0;
 
   strcpy(extension, getFT(infilename));
-  strcpy(outfilename, "outfileDecrypted");
+  strcpy(outfilename, outputName);
   strcat(outfilename, extension);
 
   fp = fopen(infilename, "r");
@@ -112,8 +110,6 @@ void decrypt(char* infilename, char* pass)
     c = fgetc(fp);
     i++;
   }
-
-  printf("\nTest:\n%s\n\n", extension);
 
   fclose(fp);
   fclose(outfp);

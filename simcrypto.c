@@ -8,7 +8,7 @@ void usage(void);
 
 int main(int argc, char** argv)
 {
-  char *file, *password;
+  char *file, *password, *outfile;
   int encr = 0, selection = 0;
   int i;
 
@@ -34,11 +34,15 @@ int main(int argc, char** argv)
       }
       else if (strcmp(argv[i],"-e") == 0 && selection == 0)
       {
+        outfile = (char*)malloc(custlen(argv[i+1]));
+        strcpy(outfile, argv[i+1]);
         encr = 1;
         selection = 1;
       }
       else if (strcmp(argv[i],"-d") == 0 && selection == 0)
       {
+        outfile = (char*)malloc(custlen(argv[i+1]));
+        strcpy(outfile, argv[i+1]);
         encr = 0;
         selection = 1;
       }
@@ -48,11 +52,11 @@ int main(int argc, char** argv)
     {
       if(encr == 1)
       {
-        encrypt(file, password);
+        encrypt(file, password, outfile);
       }
       else
       {
-        decrypt("outfile.txt", password);
+        decrypt(file, password, outfile);
       }
     }
     else
@@ -65,5 +69,11 @@ int main(int argc, char** argv)
 
 void usage(void)
 {
-  printf("\n     -------\n      USAGE\n     -------\nYou fucking nonce...\n   -f [filename]\n   -p [password]\n   -e Encrypt mode\n   -d Decrypt mode\n\n");
+  printf("\n     -------\n      USAGE\n     -------\nYou fucking nonce... \
+  \n   -f [filename]\n   -p [password]\n \
+  -e [filename] :: Encrypt into [filename]\n \
+  -d [filename] :: Decrypt into [filename]\n\n \
+  EXAMPLE USAGE:\n \
+  ./simcrypto -f myFile.txt -p pass123 -e encrypted\n \
+  ./simcrypto -f encrypted.txt -p pass123 -d decrypted\n\n");
 }
